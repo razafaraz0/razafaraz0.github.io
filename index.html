@@ -10,6 +10,7 @@
 /* Game Boy (grey) palette: dark / mid-dark / mid-light / pale */
 :root{--d:#1a1a1a;--m:#5c5c5c;--l:#a8a8a8;--p:#e8e8e8}
 *{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--d);color:var(--d);font-family:'Press Start 2P',monospace;font-size:12px;line-height:1.8}
 .wrap{max-width:760px;margin:0 auto;padding:0 10px 30px}
 :focus-visible{outline:4px solid var(--p);outline-offset:2px}
@@ -36,6 +37,7 @@ svg .k,svg .h,svg .g,svg .n{fill:#1a1a1a}svg .r,svg .Y,svg .b{fill:#5c5c5c}svg .
 .board{position:absolute;left:44%;top:3%;width:32%;height:28%;background:var(--p);border:.9cqw solid var(--d);outline:.5cqw solid var(--m);display:flex;align-items:center;gap:2cqw;padding:0 2cqw;font-size:max(7px,2cqw);line-height:1.6;white-space:pre-line}
 .board::before{content:"";flex:none;width:7cqw;height:7cqw;border-radius:50%;border:.7cqw solid var(--d);background:linear-gradient(var(--m) 45%,var(--d) 45% 55%,var(--p) 55%)}
 @keyframes lev{from{transform:translateY(0) rotate(-3deg)}to{transform:translateY(-2.4cqw) rotate(3deg)}}
+.techs{position:absolute;inset:0;pointer-events:none}
 .tech{position:absolute;display:flex;flex-direction:column;align-items:center;gap:.8cqw;animation:lev 2.4s steps(6) infinite alternate;font-size:max(5px,1.1cqw);line-height:1}
 .tech svg,.spr svg{display:block;width:100%;height:auto}
 .tech.t1{left:22%;top:26%;width:8%}
@@ -79,7 +81,7 @@ svg .k,svg .h,svg .g,svg .n{fill:#1a1a1a}svg .r,svg .Y,svg .b{fill:#5c5c5c}svg .
 #menu button:hover::before,#menu button[aria-current]::before{content:"▶ "}
 #menu button[aria-current]{background:var(--l)}
 #menu button.cv{background:var(--d);color:var(--p);border-color:var(--l)}
-#entry{border:5px solid var(--l);border-radius:8px;padding:16px;min-height:200px;background:var(--p)}
+#entry{overflow-wrap:anywhere;scroll-margin-top:80px;border:5px solid var(--l);border-radius:8px;padding:16px;min-height:200px;background:var(--p)}
 #entry h2{font-size:13px;margin:0 0 12px}
 #entry h3{font-size:11px;margin:18px 0 10px;color:var(--m)}
 #entry p{margin:0 0 12px}
@@ -100,7 +102,43 @@ svg .k,svg .h,svg .g,svg .n{fill:#1a1a1a}svg .r,svg .Y,svg .b{fill:#5c5c5c}svg .
 #start{position:fixed;inset:0;background:var(--d);color:var(--p);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;z-index:9;text-align:center;padding:20px}
 #start h1{font-size:20px;line-height:1.6;margin:0}
 #start button{font:inherit;background:var(--p);color:var(--d);border:4px solid var(--l);padding:16px 20px;cursor:pointer;animation:bl 1s steps(2) infinite}
-@media (max-width:640px){.dex{grid-template-columns:1fr}.cvbtn{font-size:9px;padding:8px 10px}}
+/* ---------- responsive: phones ---------- */
+@media (max-width:640px){
+  .wrap{padding:0 8px 24px}
+  .top{font-size:10px;gap:6px;flex-wrap:wrap}
+  #mute{font-size:8px;padding:10px 8px}
+  .cvbtn{font-size:8px;padding:9px 8px;gap:6px}
+  .cvbtn svg{width:14px;height:14px}
+  .screen{aspect-ratio:3/4}
+  .screen .wall{inset:0 0 60% 0}
+  .screen .floor{inset:40% 0 0 0}
+  .screen .vend{display:none}
+  .screen .techs{inset:auto;top:1.5%;left:0;right:0;display:flex;justify-content:space-around;align-items:flex-start}
+  .screen .techs .tech{position:static;width:12%;font-size:clamp(6px,1.8cqw,9px)}
+  .screen .info{font-size:clamp(8px,2.5cqw,11px);padding:2cqw 3cqw 2.4cqw}
+  .screen .info .hp{margin-top:1.6cqw}
+  .screen .info .ball{width:3.6cqw;height:3.6cqw}
+  .screen .info .hpb span{height:2.6cqw}
+  .screen .info.f{top:14%;left:3%;width:64%}
+  .screen .info.m{top:51%;right:3%;width:46%}
+  .screen .board{left:3%;top:28%;width:50%;height:12%;font-size:clamp(8px,2.4cqw,11px);padding:0 3cqw;gap:3cqw}
+  .screen .board::before{width:9cqw;height:9cqw}
+  .screen .plat.f{top:41%;right:0;width:50%;height:12%}
+  .screen .plat.m{bottom:27%;left:0;width:62%;height:11%}
+  .screen .spr.f{top:20%;right:5%;width:22%}
+  .screen .spr.m{bottom:31.5%;left:12%;width:38%}
+  .screen .dialog{height:25%;font-size:clamp(9px,3cqw,13px);padding:3.5cqw 4cqw}
+  .screen #skip{font-size:clamp(7px,2cqw,10px)}
+  .dex{grid-template-columns:1fr}
+  #menu{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  #menu button{font-size:10px;padding:12px 10px}
+  #entry{padding:12px;font-size:11px}
+  #entry h2{font-size:12px}
+  #entry li li{font-size:10px}
+  .btn{padding:14px 8px;font-size:10px}
+  #start h1{font-size:17px}
+}
+@media (max-width:360px){.top>span:first-child{display:none}.top{justify-content:flex-end}}
 @media (prefers-reduced-motion:reduce){.tech,.spr.in,.flash,#start button,.blink{animation:none}}
 </style>
 </head>
@@ -124,11 +162,13 @@ svg .k,svg .h,svg .g,svg .n{fill:#1a1a1a}svg .r,svg .Y,svg .b{fill:#5c5c5c}svg .
     <div class="wall"></div><div class="floor"></div><div class="vend"></div>
     <div class="board" aria-hidden="true">WANTS TO
 KNOW YOU!</div>
+    <div class="techs">
     <div class="tech t1" data-t="java" aria-hidden="true"></div>
     <div class="tech t2" data-t="python" aria-hidden="true"></div>
     <div class="tech t3" data-t="sql" aria-hidden="true"></div>
     <div class="tech t4" data-t="go" aria-hidden="true"></div>
     <div class="tech t5" data-t="react" aria-hidden="true"></div>
+    </div>
     <div class="plat f"></div><div class="plat m"></div>
     <div class="info f"><div class="row"><span>Hiring Manager</span><span>Lv.50</span></div>
       <div class="hp"><i class="ball"></i><div class="hpb"><b>HP</b><span><i id="foehp"></i></span></div></div></div>
